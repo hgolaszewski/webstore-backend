@@ -1,46 +1,32 @@
-package domain;
+package com.example.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
-public class Producer implements Serializable {
+public class Flavor implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private short id;
 
-	@Column(name = "name", unique = true, nullable = false, length = 45)
+	@Column(name = "name", unique = true, nullable = false)
 	private String name;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producer",cascade=CascadeType.ALL)
-	private Set<Product> products = new HashSet<>(0);
-
-	public Producer() {
-
+	
+	public Flavor(){
 	}
 	
-	public Producer(String name) {
-		this.name = name;
-	}
-
-	public Producer(short id, String name) {
-		this.id = id;
+	public Flavor(String name){
 		this.name = name;
 	}
 
@@ -60,19 +46,6 @@ public class Producer implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
-	@Override
-	public String toString() {
-		return "[Producer: " + id + ", " + name + "]";
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -81,7 +54,7 @@ public class Producer implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Producer other = (Producer) obj;
+		Flavor other = (Flavor) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -93,6 +66,11 @@ public class Producer implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "[Flavor: " + id + ", " + name + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -100,5 +78,4 @@ public class Producer implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
 }

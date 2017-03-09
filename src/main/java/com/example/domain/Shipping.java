@@ -1,4 +1,4 @@
-package domain;
+package com.example.domain;
 
 import java.io.Serializable;
 
@@ -7,45 +7,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
-public class Flavor implements Serializable {
+public class Shipping implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
 	private short id;
-
-	@Column(name = "name", unique = true, nullable = false)
+	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
+	private float price;
 	
-	public Flavor(){
-	}
-	
-	public Flavor(String name){
-		this.name = name;
-	}
-
 	public short getId() {
 		return id;
 	}
-
 	public void setId(short id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
 
+	@Override
+	public String toString(){
+		return "[Shipping : " + this.getId() + ", " + this.getName() + ", " + this.getPrice() + "]";
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -54,7 +52,7 @@ public class Flavor implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Flavor other = (Flavor) obj;
+		Shipping other = (Shipping) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -64,12 +62,7 @@ public class Flavor implements Serializable {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "[Flavor: " + id + ", " + name + "]";
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,4 +71,5 @@ public class Flavor implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 }

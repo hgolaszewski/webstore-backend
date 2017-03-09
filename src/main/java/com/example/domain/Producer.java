@@ -1,4 +1,4 @@
-package domain;
+package com.example.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,28 +18,28 @@ import javax.persistence.UniqueConstraint;
 @SuppressWarnings("serial")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
-public class Category implements Serializable {
+public class Producer implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private short id;
 
-	@Column(name = "name", unique = true, nullable = false, length = 255)
+	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producer",cascade=CascadeType.ALL)
 	private Set<Product> products = new HashSet<>(0);
 
-	public Category() {
+	public Producer() {
 
 	}
 	
-	public Category(String name) {
+	public Producer(String name) {
 		this.name = name;
 	}
 
-	public Category(short id, String name) {
+	public Producer(short id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -69,6 +69,11 @@ public class Category implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "[Producer: " + id + ", " + name + "]";
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -76,7 +81,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Producer other = (Producer) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -88,11 +93,6 @@ public class Category implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "[Category: " + id + ", " + name + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -100,4 +100,5 @@ public class Category implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 }

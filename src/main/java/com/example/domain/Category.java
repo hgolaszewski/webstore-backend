@@ -1,49 +1,73 @@
-package domain;
+package com.example.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @Entity
-public class Shipping implements Serializable {
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
+public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private short id;
-	@Column(nullable = false)
+
+	@Column(name = "name", unique = true, nullable = false, length = 255)
 	private String name;
-	@Column(nullable = false)
-	private float price;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade=CascadeType.ALL)
+	private Set<Product> products = new HashSet<>(0);
+
+	public Category() {
+
+	}
 	
+	public Category(String name) {
+		this.name = name;
+	}
+
+	public Category(short id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public short getId() {
 		return id;
 	}
+
 	public void setId(short id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public float getPrice() {
-		return price;
-	}
-	public void setPrice(float price) {
-		this.price = price;
+
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	@Override
-	public String toString(){
-		return "[Shipping : " + this.getId() + ", " + this.getName() + ", " + this.getPrice() + "]";
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -52,7 +76,7 @@ public class Shipping implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Shipping other = (Shipping) obj;
+		Category other = (Category) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -62,7 +86,12 @@ public class Shipping implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "[Category: " + id + ", " + name + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,5 +100,4 @@ public class Shipping implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
 }
