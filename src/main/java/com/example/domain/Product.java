@@ -1,5 +1,9 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,11 +30,13 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private short id;
-	
+
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
-	
+
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "producerId", nullable = false)
 	private Producer producer;
@@ -40,7 +46,8 @@ public class Product implements Serializable{
 	
 	@Column(name = "description", nullable = true, columnDefinition = "TEXT")
 	private String description;
-	
+
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade=CascadeType.ALL)
 	private Set<Opinion> opinions = new HashSet<>(0);
 	

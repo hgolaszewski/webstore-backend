@@ -26,7 +26,6 @@ public class Pack implements Serializable {
 	@Column(name = "size", columnDefinition = "decimal(4,0)", nullable = false)
 	private short size;
 
-	
 	@Column(name = "type", columnDefinition="enum('gram','kaps','ml','saszetek')", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Type type;

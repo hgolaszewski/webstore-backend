@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,12 +26,11 @@ public class Customer implements Serializable {
 	
 	@Column(nullable = false)
 	private String passSHA256;
-	
+
 	@OneToMany(fetch = FetchType.EAGER)
-	
 	@JoinColumn(name = "customerId", nullable = false)
 	private Set<Address> address = new HashSet<Address>();
-	
+
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customerId", nullable = false)
 	private Set<Order> order = new HashSet<Order>();

@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -26,6 +28,7 @@ public class Opinion implements Serializable {
 	@Column(name = "rate", nullable = false)
 	private short rate;
 
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId", nullable = false)
 	private Product product;
