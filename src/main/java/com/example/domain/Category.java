@@ -1,28 +1,19 @@
 package com.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @JsonFilter("Category")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Category implements Serializable {
 
 	@Id
@@ -33,7 +24,6 @@ public class Category implements Serializable {
 	@Column(name = "name", unique = true, nullable = false, length = 255)
 	private String name;
 
-	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade=CascadeType.ALL)
 	private Set<Product> products = new HashSet<>(0);
 
