@@ -1,7 +1,9 @@
 package com.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,6 +22,7 @@ import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @JsonFilter("Producer")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
 public class Producer implements Serializable {
@@ -32,8 +35,7 @@ public class Producer implements Serializable {
 	@Column(name = "name", unique = true, nullable = false, length = 45)
 	private String name;
 
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producer",cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producer", cascade=CascadeType.ALL)
 	private Set<Product> products = new HashSet<>(0);
 
 	public Producer() {

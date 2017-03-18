@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.domain.Category;
 import com.example.service.CategoryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -24,8 +23,6 @@ public class CategoryRestController {
 
     @Autowired
     CategoryService categoryService;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @GetMapping
     public MappingJacksonValue getCategories(){

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by adam on 3/9/17.
  */
-public interface CustormerRepository extends JpaRepository<Customer,Short> {
+public interface CustomerRepository extends JpaRepository<Customer,Short> {
 }

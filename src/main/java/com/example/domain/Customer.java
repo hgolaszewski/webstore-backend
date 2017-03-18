@@ -1,13 +1,17 @@
 package com.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 @SuppressWarnings("serial")
+@JsonFilter("Customer")
 @Entity
 public class Customer implements Serializable {
 
@@ -25,7 +29,7 @@ public class Customer implements Serializable {
 	private String surname;
 	
 	@Column(nullable = false)
-	private String passSHA256;
+	private String password;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customerId", nullable = false)
@@ -66,11 +70,11 @@ public class Customer implements Serializable {
 		this.surname = surname;
 	}
 	
-	public String getPassSHA256() {
-		return passSHA256;
+	public String getPassword() {
+		return password;
 	}
-	public void setPassSHA256(String passSHA256) {
-		this.passSHA256 = passSHA256;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public Set<Address> getAddress() {
@@ -90,7 +94,7 @@ public class Customer implements Serializable {
 	
 	@Override
 	public String toString(){
-		return "[Customer : " + this.getId() + ", " + this.getEmail() + ", " + this.getName() + ", " + this.getSurname() + ", " + this.getPassSHA256() + "]";
+		return "[Customer : " + this.getId() + ", " + this.getEmail() + ", " + this.getName() + ", " + this.getSurname() + ", " + this.getPassword() + "]";
 	}
 	
 	@Override
