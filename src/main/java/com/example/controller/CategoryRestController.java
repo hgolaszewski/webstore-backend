@@ -42,5 +42,19 @@ public class CategoryRestController {
         return mappingJacksonValue;
     }
 
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public MappingJacksonValue updateCategory(@RequestBody Category category){
+        this.categoryService.updateCategory(category);
+        FilterProvider filters = new SimpleFilterProvider().addFilter("Category", SimpleBeanPropertyFilter.serializeAllExcept("products"));
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(category);
+        mappingJacksonValue.setFilters(filters);
+        return mappingJacksonValue;
+    }
+
+    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void deleteCategory(@PathVariable Short id){
+        this.categoryService.deleteCategory(id);
+    }
+
 
 }

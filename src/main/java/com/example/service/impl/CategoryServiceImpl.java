@@ -58,4 +58,10 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryRepository.delete(category);
 	}
 
+	@Override
+	public void deleteCategory(Short id) {
+		categoryRepository.delete(id);
+	}
+
+
 }

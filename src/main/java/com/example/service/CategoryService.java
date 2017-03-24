@@ -19,4 +19,6 @@ public interface CategoryService {
 	public Category updateCategory(Category category);
 	
 	public void deleteCategory(Category category);
+
+	public void deleteCategory(Short id);
 }
