@@ -1,5 +1,5 @@
 package com.example.domain;
 
 public enum Type {
-	gram,kaps,ml,saszetek;
+	g, ml, kaps, tab, sasz;
 }

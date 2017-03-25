@@ -52,6 +52,11 @@ public class ProducerServiceImpl implements ProducerService{
 	}
 
 	@Override
+	public void deleteProducer(short id) {
+		producerRepository.delete(id);
+	}
+
+	@Override
 	public void deleteProducer(Producer producer) {
 		producerRepository.delete(producer);
 	}

@@ -3,10 +3,7 @@ package com.example.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,9 +15,9 @@ public class ProductPackFlavor implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date exp;
-	
-	private short quantity;
 
+	@Column(name = "quantity", nullable = false)
+	private short quantity;
 
 	public Flavor getFlavor() {
 		return productPackFlavorId.getFlavor();

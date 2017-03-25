@@ -13,7 +13,6 @@ import java.util.Set;
 @JsonFilter("Category")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Category implements Serializable {
 
 	@Id

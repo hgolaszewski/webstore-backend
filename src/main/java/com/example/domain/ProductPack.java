@@ -1,5 +1,9 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,13 +16,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
+@JsonFilter("ProductPack")
 @Entity
 public class ProductPack implements Serializable {
 
-	@Column(name = "image", nullable = true, columnDefinition = "BLOB")
+	@Column(name = "image", nullable = true, columnDefinition = "MEDIUMBLOB")
 	private byte[] image;
+
 	@Column(name = "price", nullable = false, columnDefinition = "decimal(5,2)")
 	private float price;
+
+	@Column(name = "size", columnDefinition = "decimal(4,0)", nullable = false)
+	private short size;
 
 	@EmbeddedId
 	ProductPackId productPackId = new ProductPackId();
@@ -41,24 +50,10 @@ public class ProductPack implements Serializable {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
-	@Transient
-	public Product getProduct() {
-		return productPackId.getProduct();
-	}
 
-	public void setProduct(Product product) {
-		this.productPackId.setProduct(product);
-	}
+	public short getSize() {return size;}
 
-	@Transient
-	public Pack getPack() {
-		return productPackId.getPack();
-	}
-
-	public void setPack(Pack pack) {
-		this.productPackId.setPack(pack);
-	}
+	public void setSize(short size) {this.size = size;}
 
 	public ProductPackId getProductPackId() {
 		return productPackId;

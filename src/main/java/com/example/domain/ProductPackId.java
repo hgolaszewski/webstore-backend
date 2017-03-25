@@ -14,7 +14,7 @@ public class ProductPackId implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "packId", insertable = false, updatable = false)
-	private Pack pack;
+	public Pack pack;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId", insertable = false, updatable = false)

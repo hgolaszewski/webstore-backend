@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.domain.Category;
 import com.example.domain.Producer;
 import com.example.service.ProducerService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -17,12 +18,13 @@ import java.util.List;
  */
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
+@RequestMapping("/producers")
 public class ProducerRestController {
 
     @Autowired
     private ProducerService producerService;
 
-    @GetMapping("/producers")
+    @GetMapping
     public MappingJacksonValue getProducers(){
         List<Producer> producers = producerService.listProducers();
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(producers);
@@ -31,12 +33,26 @@ public class ProducerRestController {
         return mappingJacksonValue;
     }
 
-    @PostMapping(path = "/addProducer", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MappingJacksonValue registerCustomer(@RequestBody Producer producer){
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(producerService.addProducer(producer));
         FilterProvider filters = new SimpleFilterProvider().addFilter("Producer", SimpleBeanPropertyFilter.serializeAllExcept("products"));
         mappingJacksonValue.setFilters(filters);
         return mappingJacksonValue;
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public MappingJacksonValue updateCategory(@RequestBody Producer producer){
+        this.producerService.updateProducer(producer);
+        FilterProvider filters = new SimpleFilterProvider().addFilter("Producer", SimpleBeanPropertyFilter.serializeAllExcept("products"));
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(producer);
+        mappingJacksonValue.setFilters(filters);
+        return mappingJacksonValue;
+    }
+
+    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void deleteCategory(@PathVariable Short id){
+        this.producerService.deleteProducer(id);
     }
 
 }

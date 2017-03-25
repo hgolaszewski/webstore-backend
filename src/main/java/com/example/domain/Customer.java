@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-@SuppressWarnings("serial")
 @JsonFilter("Customer")
 @Entity
 public class Customer implements Serializable {

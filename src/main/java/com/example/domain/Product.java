@@ -1,9 +1,6 @@
 package com.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +9,8 @@ import java.util.Set;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"name", "producerId"}) })
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonFilter("Product")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product implements Serializable{
 	
 	@Id
@@ -29,13 +26,12 @@ public class Product implements Serializable{
 	@JoinColumn(name = "producerId", nullable = false)
 	private Producer producer;
 	
-	@Column(name = "name", unique = true, nullable = false, length = 45)
+	@Column(name = "name", nullable = false, length = 45)
 	private String name;
 	
-	@Column(name = "description", nullable = true, columnDefinition = "TEXT")
+	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 
-	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade=CascadeType.ALL)
 	private Set<Opinion> opinions = new HashSet<>(0);
 	

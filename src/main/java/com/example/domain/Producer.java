@@ -22,7 +22,6 @@ import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @JsonFilter("Producer")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
 public class Producer implements Serializable {

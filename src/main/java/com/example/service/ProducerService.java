@@ -19,4 +19,6 @@ public interface ProducerService {
 	public Producer updateProducer(Producer producer);
 	
 	public void deleteProducer(Producer producer);
+
+	public void deleteProducer(short id);
 }

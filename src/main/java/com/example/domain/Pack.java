@@ -1,5 +1,9 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Pack implements Serializable {
 
 	@Id
@@ -23,10 +29,7 @@ public class Pack implements Serializable {
 	@Column(name = "id", unique = true, nullable = false)
 	private short id;
 
-	@Column(name = "size", columnDefinition = "decimal(4,0)", nullable = false)
-	private short size;
-
-	@Column(name = "type", columnDefinition="enum('gram','kaps','ml','saszetek')", nullable = false)
+	@Column(name = "type", columnDefinition="enum('g','kaps','ml','sasz', 'tab')", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
@@ -38,7 +41,6 @@ public class Pack implements Serializable {
 	}
 	
 	public Pack(short size, Type type) {
-		this.size = size;
 		this.type = type;
 	}
 
@@ -48,14 +50,6 @@ public class Pack implements Serializable {
 
 	public void setId(short id) {
 		this.id = id;
-	}
-
-	public short getSize() {
-		return size;
-	}
-
-	public void setSize(short size) {
-		this.size = size;
 	}
 
 	public Type getType() {
@@ -85,8 +79,6 @@ public class Pack implements Serializable {
 		Pack other = (Pack) obj;
 		if (id != other.id)
 			return false;
-		if (size != other.size)
-			return false;
 		if (type != other.type)
 			return false;
 		return true;
@@ -94,7 +86,7 @@ public class Pack implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[Pack: " + id + ", " + size + ", " + type + "]";
+		return "[Pack: " + id + ", " + type + "]";
 	}
 
 	@Override
@@ -102,7 +94,6 @@ public class Pack implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + size;
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
