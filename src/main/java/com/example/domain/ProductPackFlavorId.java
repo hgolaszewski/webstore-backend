@@ -1,12 +1,7 @@
 package com.example.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Embeddable
@@ -17,14 +12,12 @@ public class ProductPackFlavorId implements Serializable{
 	private Flavor flavor;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({ 
-		@JoinColumn(name = "packId", insertable = false, updatable = false),
-		@JoinColumn(name = "productId", insertable = false, updatable = false) })
+	@JoinColumn(name = "productPackId", insertable = false, updatable = false)
 	private ProductPack productPack;
-	
+
 	public ProductPackFlavorId(){
 	}
-	
+
 	public ProductPackFlavorId(ProductPack productPack, Flavor flavor){
 		this.productPack = productPack;
 		this.flavor = flavor;
