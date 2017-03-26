@@ -1,5 +1,7 @@
 package com.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.UniqueConstraint;
 
 @SuppressWarnings("serial")
 @Entity
+@JsonFilter("Flavor")
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
 public class Flavor implements Serializable {
 

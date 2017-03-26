@@ -17,37 +17,32 @@ public class FlavorServiceImpl implements FlavorService{
 	private FlavorRepository flavorRepository;
 
 	@Override
-	public void addFlavor(Flavor flavor) {
-		//flavorRepository.addFlavor(flavor);
+	public Flavor addFlavor(Flavor flavor) {
+		return flavorRepository.save(flavor);
 	}
 
 	@Override
-	public void updateFlavor(Flavor flavor) {
-		// TODO Auto-generated method stub
-		
+	public Flavor updateFlavor(Flavor flavor) {
+		return flavorRepository.save(flavor);
 	}
 
 	@Override
 	public List<Flavor> listFlavor() {
-		// TODO Auto-generated method stub
-		return null;
+		return flavorRepository.findAll();
 	}
 
 	@Override
 	public Flavor getFlavorById(short id) {
 		return null;
-		//return flavorRepository.getFlavorById(id);
 	}
 
 	@Override
 	public Flavor getFlavorByName(String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void removeFlavor(short id) {
-		// TODO Auto-generated method stub
-		
+		flavorRepository.delete(id);
 	}
 }
