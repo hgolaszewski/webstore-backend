@@ -24,4 +24,9 @@ public class ProductPackSeriveImpl implements ProductPackService {
 
         return productPackRepository.findFirst24ByOrderByPriceDesc();
     }
+
+    @Override
+    public ProductPack getProductPackById(short id) {
+        return productPackRepository.findOne(id);
+    }
 }

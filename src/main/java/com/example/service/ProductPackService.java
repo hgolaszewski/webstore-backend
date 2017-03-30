@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface ProductPackService {
     List<ProductPack> listForMainPage(int quantity);
+    ProductPack getProductPackById(short id);
 }
